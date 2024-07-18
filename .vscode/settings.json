@@ -1,5 +1,13 @@
 {
-    "cSpell.words": [
-        "Pressable"
-    ]
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "cSpell.words": [
+    "Pressable"
+  ],
+  "deno.enablePaths": [
+    "supabase/functions"
+  ],
+  "deno.lint": true,
+  "deno.unstable": true
 }
