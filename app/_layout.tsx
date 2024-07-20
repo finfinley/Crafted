@@ -29,9 +29,17 @@ export default function RootLayout() {
 
   return (
     <>
-      <View>
+      <View style={styles.container}>
+        <Slot />
       </View>
-      <Slot />
     </>
   );
 }
+
+const styles = {
+  container: {
+    flex: 1,
+    backgroundColor: "#25292e",
+    color: "white",
+  },
+};

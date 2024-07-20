@@ -26,9 +26,7 @@ export default function App() {
       {session && session.user ? (
         <Account key={session.user.id} session={session} />
       ) : (
-        <View>
-          <Auth />
-        </View>
+        <Auth />
       )}
     </View>
   );
@@ -37,24 +35,21 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#25292e",
-    alignItems: "center",
-    color: 'white'
   },
-  imageContainer: {
-    flex: 1,
-    paddingTop: 58,
-  },
-  footerContainer: {
-    flex: 1 / 3,
-    alignItems: "center",
-  },
-  optionsContainer: {
-    position: "absolute",
-    bottom: 80,
-  },
-  optionsRow: {
-    alignItems: "center",
-    flexDirection: "row",
-  },
+  // imageContainer: {
+  //   flex: 1,
+  //   paddingTop: 58,
+  // },
+  // footerContainer: {
+  //   flex: 1 / 3,
+  //   alignItems: "center",
+  // },
+  // optionsContainer: {
+  //   position: "absolute",
+  //   bottom: 80,
+  // },
+  // optionsRow: {
+  //   alignItems: "center",
+  //   flexDirection: "row",
+  // },
 });

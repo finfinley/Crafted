@@ -120,6 +120,8 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 20,
     justifyContent: "center",
+    alignContent: 'center'
+    
   },
   row: {
     alignItems: "center",
