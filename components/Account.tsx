@@ -3,15 +3,15 @@ import { supabase } from "../lib/supabase";
 import { StyleSheet, View, Alert, Text } from "react-native";
 import { Button, Image, Input } from "@rneui/themed";
 import { Session } from "@supabase/supabase-js";
+import ImageViewer from "./ImageViewer";
 
-
-const DefaultImage = require("../assets/images/default-banner.png")
+const DefaultImage = require("../assets/images/default-banner.png");
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
-  const [website, setWebsite] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [bannerUrl, setBannerUrl] = useState("");
 
   useEffect(() => {
     if (session) getProfile();
@@ -22,19 +22,21 @@ export default function Account({ session }: { session: Session }) {
       setLoading(true);
       if (!session?.user) throw new Error("No user on the session!");
 
+      // Profile Data
       const { data, error, status } = await supabase
         .from("profiles")
-        .select(`username, website, avatar_url`)
+        .select(`username, avatar_url, banner_url`)
         .eq("id", session?.user.id)
         .single();
+      console.log(data);
       if (error && status !== 406) {
         throw error;
       }
 
       if (data) {
         setUsername(data.username);
-        setWebsite(data.website);
         setAvatarUrl(data.avatar_url);
+        setBannerUrl(data.banner_url);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -81,12 +83,13 @@ export default function Account({ session }: { session: Session }) {
   }
 
   return (
-    <View style={{position: 'relative'}}>
+    <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <View collapsable={false}>
-        <Image source={DefaultImage} />
-        {/* <Text>Test</Text> */}
-        </View>
+        <ImageViewer
+          defaultImage={DefaultImage}
+          selectedImage={bannerUrl}
+          styles={styles.image}
+        />
       </View>
       {/* <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input label="Email" value={session?.user?.email} disabled />
@@ -104,28 +107,27 @@ export default function Account({ session }: { session: Session }) {
           onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
           disabled={loading}
         />
-      </View>*/}
+      </View> */}
 
-      <View style={styles.verticallySpaced}>
+      <View>
         <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
-      </View> 
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
+  container: {
     flex: 1,
-    // paddingTop: 58,
-    position: 'relative'
   },
-  verticallySpaced: {
-    paddingTop: 500
-    // paddingTop: 4,
-    // paddingBottom: 4,
-    // alignSelf: "stretch",
+  imageContainer: {
+    height: "30%",
+    width: "100%",
   },
-  mt20: {
-    marginTop: 20,
+  image: {
+    aspectRatio: 1.5,
+    resizeMode: "cover",
+    height: "auto",
+    width: "auto",
   },
 });
