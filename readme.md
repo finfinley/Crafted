@@ -1,4 +1,8 @@
-### Crafted
+# Crafted
+The place for fine tuned cocktails.
 
-## Supabase Commands
+### Project Commands
+`yarn start` - Start Expo App
+
+### Supabase Commands
 `supabase db pull` - Pull changes from database
