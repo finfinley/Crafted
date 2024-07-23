@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Slot } from "expo-router";
 import {
   Lusitana_400Regular,
-  Lusitana_700Bold,
+  Lusitana_700Bold
 } from "@expo-google-fonts/lusitana";
 import { View, Text } from "react-native";
 

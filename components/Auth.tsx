@@ -46,6 +46,7 @@ export default function Auth() {
     });
 
     if (error) {
+      console.log({ error });
       Alert.alert(error.message);
     }
 
@@ -120,8 +121,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 20,
     justifyContent: "center",
-    alignContent: 'center'
-    
+    alignContent: "center",
   },
   row: {
     alignItems: "center",
