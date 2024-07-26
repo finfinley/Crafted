@@ -3,6 +3,7 @@ import { Alert, StyleSheet, View, AppState, Text } from "react-native";
 import { supabase } from "../lib/supabase";
 import { Button, Header, Input } from "@rneui/themed";
 import TextInput from "./form/TextInput";
+import { GRAY, TAN_GRAY, YELLOW } from "lib/styles";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -62,7 +63,7 @@ export default function Auth() {
           style={{
             fontSize: 48,
             fontFamily: "Lusitana_700Bold",
-            color: "#E4CC37",
+            color: YELLOW,
           }}
         >
           Crafted.
@@ -72,9 +73,8 @@ export default function Auth() {
         <TextInput
           label="Email"
           icon={{
-            type: "font-awesome",
-            name: "envelope",
-            color: "#707078",
+            name: "email",
+            color: { GRAY },
           }}
           onChange={(text) => setEmail(text)}
           placeholder="goodspirits@email.com"
@@ -85,9 +85,8 @@ export default function Auth() {
         <TextInput
           label="Password"
           icon={{
-            type: "font-awesome",
             name: "lock",
-            color: "#707078",
+            color: { GRAY },
           }}
           onChange={(text) => setPassword(text)}
           placeholder="Password"
@@ -98,14 +97,14 @@ export default function Auth() {
       <Button
         titleStyle={styles.title}
         style={styles.button}
-        color="#707078"
+        color={GRAY}
         title="Sign in"
         disabled={loading}
         onPress={() => signInWithEmail()}
       />
       <Button
         titleStyle={styles.title}
-        color="#87919E"
+        color={TAN_GRAY}
         style={[styles.button]}
         title="Sign up"
         disabled={loading}

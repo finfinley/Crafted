@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../lib/supabase";
-import { StyleSheet, View, Alert, Text } from "react-native";
-import { Button, Image, Input } from "@rneui/themed";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Session } from "@supabase/supabase-js";
+import { CRIMSON_CHOCOLATE, OFF_WHITE } from "lib/styles";
+import { isUserLoggedIn } from "lib/utils";
+import { useEffect, useState } from "react";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { supabase } from "../lib/supabase";
 import ImageViewer from "./ImageViewer";
 
 const DefaultImage = require("../assets/images/default-banner.png");
@@ -15,6 +17,7 @@ export default function Account({ session }: { session: Session }) {
   const [bannerUrl, setBannerUrl] = useState("");
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
+  const [id, setId] = useState("");
 
   useEffect(() => {
     if (session) getProfile();
@@ -28,8 +31,8 @@ export default function Account({ session }: { session: Session }) {
       // Profile Data
       const { data, error, status } = await supabase
         .from("profiles")
-        .select(`username, avatar_url, banner_url, location, bio`)
-        .eq("id", session?.user.id)
+        .select(`id, username, avatar_url, banner_url, location, bio`)
+        .eq("id", session?.user.id) // Change this eventually
         .single();
 
       if (error && status !== 406) {
@@ -42,6 +45,7 @@ export default function Account({ session }: { session: Session }) {
         setBannerUrl(data.banner_url);
         setLocation(data.location);
         setBio(data.bio);
+        setId(data.id);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -112,19 +116,33 @@ export default function Account({ session }: { session: Session }) {
           {/* Main Profile Details */}
           <View>
             <Text style={styles.profileUsername}>@{username}</Text>
-            <Text style={styles.profileLocation}>{location} 📍</Text>
+            <Text style={styles.profileLocation}>📍{location}</Text>
             <Text style={[styles.profileBio, styles.mt20]}>
-              {/* Crafting fine tuned cocktails since '94. Only the best ingredients
-              used here. */}
               {bio}
             </Text>
           </View>
           {/* Level & Followers */}
-          <View style={[styles.profileMicroDetails]}>
-            <Text style={styles.profileFollowers}>Level 4</Text>
-            <Text style={styles.profileFollowers}>66 Followers</Text>
+          <View style={styles.microDetailsRow}>
+            <View style={styles.profileMicroDetails}>
+              <Text style={styles.microDetailsText}>66 Followers</Text>
+              <Text style={styles.microDetailsText}>Follows 27</Text>
+            </View>
+            {isUserLoggedIn(session, id) && (
+              <View style={styles.editColumn}>
+                <Pressable
+                  style={{ alignSelf: "flex-end" }}
+                  onPress={() => Alert.alert("Good job")}
+                >
+                  <MaterialIcons
+                    size={22}
+                    name="edit"
+                    color={CRIMSON_CHOCOLATE}
+                  />
+                </Pressable>
+              </View>
+            )}
           </View>
-        </View> 
+        </View>
       </View>
       {/* <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input label="Email" value={session?.user?.email} disabled />
@@ -151,6 +169,8 @@ export default function Account({ session }: { session: Session }) {
   );
 }
 
+const PADDING_RL = 8;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -166,7 +186,7 @@ const styles = StyleSheet.create({
     width: "auto",
   },
   profileContainer: {
-    backgroundColor: "#f9f1f1",
+    backgroundColor: OFF_WHITE,
     alignSelf: "center",
     borderRadius: 8,
     width: 350,
@@ -198,7 +218,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Lusitana_700Bold",
     alignSelf: "center",
-    color: "#450920",
+    color: CRIMSON_CHOCOLATE,
   },
   profileLocation: {
     fontFamily: "Lusitana_400Regular",
@@ -207,18 +227,25 @@ const styles = StyleSheet.create({
   profileBio: {
     fontFamily: "Lusitana_400Regular",
     alignSelf: "flex-start",
-    paddingLeft: 5,
+    paddingLeft: PADDING_RL,
+  },
+  microDetailsRow: {
+    flexDirection: "row",
+    flex: 1,
   },
   profileMicroDetails: {
     flex: 1,
-    alignSelf: "flex-start",
     justifyContent: "flex-end",
-    paddingLeft: 5,
+    paddingLeft: PADDING_RL,
   },
-  profileFollowers: {
+  microDetailsText: {
     fontFamily: "Lusitana_400Regular",
-    alignSelf: "flex-start",
+    color: CRIMSON_CHOCOLATE,
+  },
+  editColumn: {
+    flex: 1,
     justifyContent: "flex-end",
+    paddingRight: 5,
   },
   mt20: {
     marginTop: 10,
