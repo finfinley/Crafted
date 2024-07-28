@@ -2,11 +2,14 @@ import {
   Lusitana_400Regular,
   Lusitana_700Bold,
 } from "@expo-google-fonts/lusitana";
+import { Satisfy_400Regular } from '@expo-google-fonts/satisfy';
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { OFF_WHITE } from "lib/styles";
 import { useEffect } from "react";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -14,6 +17,7 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     Lusitana_400Regular,
     Lusitana_700Bold,
+    Satisfy_400Regular
   });
 
   useEffect(() => {
@@ -37,15 +41,10 @@ export default function RootLayout() {
         },
       }}
     >
-      <Stack.Screen name="index" options={{ headerShown: false, headerTitle: 'Profile' }} />
+      <Stack.Screen
+        name="index"
+        options={{ headerShown: false, headerTitle: "Profile" }}
+      />
     </Stack>
   );
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: "#25292e",
-    color: OFF_WHITE,
-  },
-};

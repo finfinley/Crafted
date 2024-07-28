@@ -5,6 +5,7 @@ import { StyleSheet, View, Text } from "react-native";
 import Account from "../components/Account";
 import Auth from "../components/Auth";
 import { supabase } from "../lib/supabase";
+import { BACKGROUND_COLOR, OFF_WHITE } from "lib/styles";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,8 +36,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#25292e",
-    color: "white",
+    backgroundColor: BACKGROUND_COLOR,
+    color: OFF_WHITE,
   },
   // imageContainer: {
   //   flex: 1,

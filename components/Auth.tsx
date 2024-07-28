@@ -1,5 +1,14 @@
 import { Button } from "@rneui/themed";
-import { SILK_CHOCOLATE, YELLOW } from "lib/styles";
+import {
+  BOLD_FONT,
+  CURSIVE_FONT,
+  DARK_BLUE,
+  GRAY,
+  LIGHT_GRAY,
+  PALE_YELLOW,
+  PIRATE_TAN,
+  REGULAR_FONT
+} from "lib/styles";
 import React, { useState } from "react";
 import { Alert, AppState, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
@@ -61,9 +70,9 @@ export default function Auth() {
       <View style={{ alignItems: "center" }}>
         <Text
           style={{
-            fontSize: 48,
-            fontFamily: "Lusitana_700Bold",
-            color: YELLOW,
+            fontSize: 56,
+            fontFamily: CURSIVE_FONT,
+            color: PALE_YELLOW,
           }}
         >
           Crafted.
@@ -74,7 +83,7 @@ export default function Auth() {
           label="Email"
           icon={{
             name: "email",
-            color: "#E0E0E2",
+            color: LIGHT_GRAY,
           }}
           onChange={(text) => setEmail(text)}
           placeholder="goodspirits@email.com"
@@ -86,7 +95,7 @@ export default function Auth() {
           label="Password"
           icon={{
             name: "lock",
-            color: "#E0E0E2",
+            color: LIGHT_GRAY,
           }}
           onChange={(text) => setPassword(text)}
           placeholder="Password"
@@ -97,14 +106,14 @@ export default function Auth() {
       <Button
         titleStyle={styles.title}
         style={styles.button}
-        color={SILK_CHOCOLATE}
+        color={DARK_BLUE}
         title="Sign in"
         disabled={loading}
         onPress={() => signInWithEmail()}
       />
       <Button
         titleStyle={styles.title}
-        color="#A3A9AA"
+        color={GRAY}
         style={[styles.button]}
         title="Sign up"
         disabled={loading}
@@ -136,6 +145,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontFamily: "Lusitana_400Regular",
+    fontFamily: REGULAR_FONT,
   },
 });

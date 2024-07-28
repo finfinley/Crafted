@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Session } from "@supabase/supabase-js";
-import { SILK_CHOCOLATE, OFF_WHITE } from "lib/styles";
+import { SILK_CHOCOLATE, OFF_WHITE, BOLD_FONT, REGULAR_FONT } from "lib/styles";
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
 import { Alert, Button, Pressable, StyleSheet, Text, View } from "react-native";
@@ -211,16 +211,16 @@ const styles = StyleSheet.create({
   },
   profileUsername: {
     fontSize: 20,
-    fontFamily: "Lusitana_700Bold",
+    fontFamily: BOLD_FONT,
     alignSelf: "center",
     color: SILK_CHOCOLATE,
   },
   profileLocation: {
-    fontFamily: "Lusitana_400Regular",
+    fontFamily: REGULAR_FONT,
     alignSelf: "center",
   },
   profileBio: {
-    fontFamily: "Lusitana_400Regular",
+    fontFamily: REGULAR_FONT,
     alignSelf: "flex-start",
     paddingLeft: PADDING_RL,
   },
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     paddingLeft: PADDING_RL,
   },
   microDetailsText: {
-    fontFamily: "Lusitana_400Regular",
+    fontFamily: REGULAR_FONT,
     // color: SILK_CHOCOLATE,
   },
   editColumn: {
