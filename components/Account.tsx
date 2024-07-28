@@ -1,11 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Session } from "@supabase/supabase-js";
-import { CRIMSON_CHOCOLATE, OFF_WHITE } from "lib/styles";
+import { SILK_CHOCOLATE, OFF_WHITE } from "lib/styles";
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, Pressable, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
 import ImageViewer from "./ImageViewer";
+import { Link } from "expo-router";
 
 const DefaultImage = require("../assets/images/default-banner.png");
 const DefaultProfilePicture = require("../assets/images/default-profile.jpeg");
@@ -117,9 +118,7 @@ export default function Account({ session }: { session: Session }) {
           <View>
             <Text style={styles.profileUsername}>@{username}</Text>
             <Text style={styles.profileLocation}>📍{location}</Text>
-            <Text style={[styles.profileBio, styles.mt20]}>
-              {bio}
-            </Text>
+            <Text style={[styles.profileBio, styles.mt20]}>{bio}</Text>
           </View>
           {/* Level & Followers */}
           <View style={styles.microDetailsRow}>
@@ -129,16 +128,12 @@ export default function Account({ session }: { session: Session }) {
             </View>
             {isUserLoggedIn(session, id) && (
               <View style={styles.editColumn}>
-                <Pressable
+                <Link
+                  href={{ pathname: "settings" }}
                   style={{ alignSelf: "flex-end" }}
-                  onPress={() => Alert.alert("Good job")}
                 >
-                  <MaterialIcons
-                    size={22}
-                    name="edit"
-                    color={CRIMSON_CHOCOLATE}
-                  />
-                </Pressable>
+                  <MaterialIcons size={22} name="edit" color={SILK_CHOCOLATE} />
+                </Link>
               </View>
             )}
           </View>
@@ -160,7 +155,7 @@ export default function Account({ session }: { session: Session }) {
           onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
           disabled={loading}
         />
-      </View> */}
+      </View> */} 
 
       {/* <View>
         <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
@@ -218,7 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Lusitana_700Bold",
     alignSelf: "center",
-    color: CRIMSON_CHOCOLATE,
+    color: SILK_CHOCOLATE,
   },
   profileLocation: {
     fontFamily: "Lusitana_400Regular",
@@ -240,7 +235,7 @@ const styles = StyleSheet.create({
   },
   microDetailsText: {
     fontFamily: "Lusitana_400Regular",
-    color: CRIMSON_CHOCOLATE,
+    // color: SILK_CHOCOLATE,
   },
   editColumn: {
     flex: 1,

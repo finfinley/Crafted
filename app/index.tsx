@@ -35,6 +35,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#25292e",
+    color: "white",
   },
   // imageContainer: {
   //   flex: 1,

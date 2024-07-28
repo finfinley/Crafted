@@ -1,13 +1,12 @@
-// Rest of the import statements
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { Slot } from "expo-router";
 import {
   Lusitana_400Regular,
-  Lusitana_700Bold
+  Lusitana_700Bold,
 } from "@expo-google-fonts/lusitana";
-import { View, Text } from "react-native";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { OFF_WHITE } from "lib/styles";
+import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,11 +27,18 @@ export default function RootLayout() {
   }
 
   return (
-    <>
-      <View style={styles.container}>
-        <Slot />
-      </View>
-    </>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: OFF_WHITE,
+        },
+        headerTitleStyle: {
+          color: OFF_WHITE,
+        },
+      }}
+    >
+      <Stack.Screen name="index" options={{ headerShown: false, headerTitle: 'Profile' }} />
+    </Stack>
   );
 }
 
@@ -40,6 +46,6 @@ const styles = {
   container: {
     flex: 1,
     backgroundColor: "#25292e",
-    color: "white",
+    color: OFF_WHITE,
   },
 };
