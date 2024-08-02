@@ -5,6 +5,7 @@ export const PALE_YELLOW = "#FBECC0"; //#F2E699
 export const SILK_CHOCOLATE = "#6E5E63";
 export const LIGHT_GRAY = "#E0E0E2"; // #E0E0E2
 export const GRAY = "#A3A9AA";
+export const FLORAL_GRAY = "#87919E"
 export const TAN_GRAY = "#BBA0B2";
 export const DARK_BLUE = "#3D405B";
 export const PIRATE_TAN = "#948767";

@@ -57,41 +57,6 @@ export default function Account({ session }: { session: Session }) {
     }
   }
 
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: {
-    username: string;
-    website: string;
-    avatar_url: string;
-  }) {
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const updates = {
-        id: session?.user.id,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date(),
-      };
-
-      const { error } = await supabase.from("profiles").upsert(updates);
-
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
     <View style={styles.container}>
       {/* Banner */}
@@ -155,7 +120,7 @@ export default function Account({ session }: { session: Session }) {
           onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
           disabled={loading}
         />
-      </View> */} 
+      </View> */}
 
       {/* <View>
         <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
