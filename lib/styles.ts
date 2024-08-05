@@ -9,6 +9,7 @@ export const FLORAL_GRAY = "#87919E"
 export const TAN_GRAY = "#BBA0B2";
 export const DARK_BLUE = "#3D405B";
 export const PIRATE_TAN = "#948767";
+export const RED = "#874741";
 /* FONTS */
 export const REGULAR_FONT = "Lusitana_400Regular";
 export const BOLD_FONT = "Lusitana_700Bold";

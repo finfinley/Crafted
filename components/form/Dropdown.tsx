@@ -11,8 +11,7 @@ const data = [
   { label: "Any Pronouns", value: "Any Pronouns" },
 ];
 
-const DropdownComponent = () => {
-  const [value, setValue] = useState(null);
+const DropdownComponent = ({ setFieldValue, value, name }) => {
 
   return (
     <Dropdown
@@ -27,7 +26,7 @@ const DropdownComponent = () => {
       placeholder="Pronouns"
       value={value}
       onChange={(item) => {
-        setValue(item.value);
+        setFieldValue(name, item?.value);
       }}
     />
   );

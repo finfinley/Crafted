@@ -1,15 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Session } from "@supabase/supabase-js";
-import { SILK_CHOCOLATE, OFF_WHITE, BOLD_FONT, REGULAR_FONT } from "lib/styles";
+import { Link } from "expo-router";
+import { BOLD_FONT, OFF_WHITE, REGULAR_FONT, SILK_CHOCOLATE } from "lib/styles";
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
-import { Alert, Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
 import ImageViewer from "./ImageViewer";
-import { Link } from "expo-router";
-
-const DefaultImage = require("../assets/images/default-banner.png");
-const DefaultProfilePicture = require("../assets/images/default-profile.jpeg");
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
@@ -62,7 +59,7 @@ export default function Account({ session }: { session: Session }) {
       {/* Banner */}
       <View style={styles.bannerContainer}>
         <ImageViewer
-          defaultImage={DefaultImage}
+          defaultImage={{}}
           selectedImage={bannerUrl}
           styles={styles.bannerImage}
         />
@@ -72,7 +69,7 @@ export default function Account({ session }: { session: Session }) {
         {/* Profile Picture */}
         <View style={styles.profilePictureContainer}>
           <ImageViewer
-            defaultImage={DefaultProfilePicture}
+            defaultImage={{}}
             selectedImage={avatarUrl}
             styles={styles.profilePicture}
           />
