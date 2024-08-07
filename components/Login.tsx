@@ -1,9 +1,17 @@
+import { Button } from "@rneui/themed";
+import {
+  CURSIVE_FONT,
+  DARK_BLUE,
+  GRAY,
+  HEADER_FONT,
+  LIGHT_GRAY,
+  PALE_YELLOW,
+  REGULAR_FONT
+} from "lib/styles";
 import React, { useState } from "react";
-import { Alert, StyleSheet, View, AppState, Text } from "react-native";
+import { Alert, AppState, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
-import { Button, Header, Input } from "@rneui/themed";
 import TextInput from "./form/TextInput";
-import { GRAY, TAN_GRAY, YELLOW } from "lib/styles";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -17,7 +25,7 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-export default function Auth() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -61,9 +69,9 @@ export default function Auth() {
       <View style={{ alignItems: "center" }}>
         <Text
           style={{
-            fontSize: 48,
-            fontFamily: "Lusitana_700Bold",
-            color: YELLOW,
+            fontSize: 56,
+            fontFamily: CURSIVE_FONT,
+            color: PALE_YELLOW,
           }}
         >
           Crafted.
@@ -74,7 +82,7 @@ export default function Auth() {
           label="Email"
           icon={{
             name: "email",
-            color: { GRAY },
+            color: LIGHT_GRAY,
           }}
           onChange={(text) => setEmail(text)}
           placeholder="goodspirits@email.com"
@@ -86,7 +94,7 @@ export default function Auth() {
           label="Password"
           icon={{
             name: "lock",
-            color: { GRAY },
+            color: LIGHT_GRAY,
           }}
           onChange={(text) => setPassword(text)}
           placeholder="Password"
@@ -97,14 +105,14 @@ export default function Auth() {
       <Button
         titleStyle={styles.title}
         style={styles.button}
-        color={GRAY}
+        color={DARK_BLUE}
         title="Sign in"
         disabled={loading}
         onPress={() => signInWithEmail()}
       />
       <Button
         titleStyle={styles.title}
-        color={TAN_GRAY}
+        color={GRAY}
         style={[styles.button]}
         title="Sign up"
         disabled={loading}
@@ -136,6 +144,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontFamily: "Lusitana_400Regular",
+    fontFamily: HEADER_FONT,
   },
 });

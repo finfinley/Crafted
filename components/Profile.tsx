@@ -1,23 +1,30 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Session } from "@supabase/supabase-js";
-import { CRIMSON_CHOCOLATE, OFF_WHITE } from "lib/styles";
+import { Link } from "expo-router";
+import {
+  BOLD_REG_FONT,
+  HEADER_FONT,
+  LIGHT_REG_FONT,
+  REGULAR_FONT,
+  SILK_CHOCOLATE,
+  VINTAGE_WHITE,
+} from "lib/styles";
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
 import ImageViewer from "./ImageViewer";
 
-const DefaultImage = require("../assets/images/default-banner.png");
-const DefaultProfilePicture = require("../assets/images/default-profile.jpeg");
-
-export default function Account({ session }: { session: Session }) {
+export default function Profile({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [bannerUrl, setBannerUrl] = useState("");
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
-  const [id, setId] = useState("");
+  const [handle, setHandle] = useState();
+  const [avatarUrl, setAvatarUrl] = useState();
+  const [bannerUrl, setBannerUrl] = useState();
+  const [bio, setBio] = useState();
+  const [location, setLocation] = useState();
+  const [id, setId] = useState();
+  const [pronouns, setPronouns] = useState();
+  const [pronounsVisible, setPronounsVisible] = useState();
 
   useEffect(() => {
     if (session) getProfile();
@@ -31,7 +38,9 @@ export default function Account({ session }: { session: Session }) {
       // Profile Data
       const { data, error, status } = await supabase
         .from("profiles")
-        .select(`id, username, avatar_url, banner_url, location, bio`)
+        .select(
+          `id, handle, avatar_url, banner_url, location, bio, pronouns, pronouns_visible`
+        )
         .eq("id", session?.user.id) // Change this eventually
         .single();
 
@@ -40,7 +49,9 @@ export default function Account({ session }: { session: Session }) {
       }
 
       if (data) {
-        setUsername(data.username);
+        setHandle(data.handle);
+        setPronouns(data.pronouns);
+        setPronounsVisible(data.pronouns_visible);
         setAvatarUrl(data.avatar_url);
         setBannerUrl(data.banner_url);
         setLocation(data.location);
@@ -56,47 +67,12 @@ export default function Account({ session }: { session: Session }) {
     }
   }
 
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: {
-    username: string;
-    website: string;
-    avatar_url: string;
-  }) {
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const updates = {
-        id: session?.user.id,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date(),
-      };
-
-      const { error } = await supabase.from("profiles").upsert(updates);
-
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
     <View style={styles.container}>
       {/* Banner */}
       <View style={styles.bannerContainer}>
         <ImageViewer
-          defaultImage={DefaultImage}
+          defaultImage={{}}
           selectedImage={bannerUrl}
           styles={styles.bannerImage}
         />
@@ -106,7 +82,7 @@ export default function Account({ session }: { session: Session }) {
         {/* Profile Picture */}
         <View style={styles.profilePictureContainer}>
           <ImageViewer
-            defaultImage={DefaultProfilePicture}
+            defaultImage={{}}
             selectedImage={avatarUrl}
             styles={styles.profilePicture}
           />
@@ -115,56 +91,32 @@ export default function Account({ session }: { session: Session }) {
         <View style={styles.profileDetailContainer}>
           {/* Main Profile Details */}
           <View>
-            <Text style={styles.profileUsername}>@{username}</Text>
+            <Text style={styles.profileHandle}>@{handle}</Text>
+            {pronounsVisible && (
+              <Text style={styles.profilePronouns}>{pronouns}</Text>
+            )}
             <Text style={styles.profileLocation}>📍{location}</Text>
-            <Text style={[styles.profileBio, styles.mt20]}>
-              {bio}
-            </Text>
+            <Text style={[styles.profileBio, styles.mt20]}>{bio}</Text>
           </View>
           {/* Level & Followers */}
           <View style={styles.microDetailsRow}>
             <View style={styles.profileMicroDetails}>
               <Text style={styles.microDetailsText}>66 Followers</Text>
-              <Text style={styles.microDetailsText}>Follows 27</Text>
+              <Text style={styles.microDetailsText}>27 Following</Text>
             </View>
             {isUserLoggedIn(session, id) && (
               <View style={styles.editColumn}>
-                <Pressable
+                <Link
+                  href={{ pathname: "settings" }}
                   style={{ alignSelf: "flex-end" }}
-                  onPress={() => Alert.alert("Good job")}
                 >
-                  <MaterialIcons
-                    size={22}
-                    name="edit"
-                    color={CRIMSON_CHOCOLATE}
-                  />
-                </Pressable>
+                  <MaterialIcons size={22} name="edit" color={SILK_CHOCOLATE} />
+                </Link>
               </View>
             )}
           </View>
         </View>
       </View>
-      {/* <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
-      </View>
-
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title={loading ? 'Loading ...' : 'Update'}
-          onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
-          disabled={loading}
-        />
-      </View> */}
-
-      {/* <View>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
-      </View> */}
     </View>
   );
 }
@@ -186,7 +138,7 @@ const styles = StyleSheet.create({
     width: "auto",
   },
   profileContainer: {
-    backgroundColor: OFF_WHITE,
+    backgroundColor: VINTAGE_WHITE,
     alignSelf: "center",
     borderRadius: 8,
     width: 350,
@@ -214,18 +166,24 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  profileUsername: {
+  profileHandle: {
     fontSize: 20,
-    fontFamily: "Lusitana_700Bold",
+    fontFamily: HEADER_FONT,
     alignSelf: "center",
-    color: CRIMSON_CHOCOLATE,
+    color: SILK_CHOCOLATE,
+  },
+  profilePronouns: {
+    paddingTop: 0,
+    fontFamily: LIGHT_REG_FONT,
+    alignSelf: "center",
+    fontSize: 12,
   },
   profileLocation: {
-    fontFamily: "Lusitana_400Regular",
+    fontFamily: BOLD_REG_FONT,
     alignSelf: "center",
   },
   profileBio: {
-    fontFamily: "Lusitana_400Regular",
+    fontFamily: REGULAR_FONT,
     alignSelf: "flex-start",
     paddingLeft: PADDING_RL,
   },
@@ -239,8 +197,8 @@ const styles = StyleSheet.create({
     paddingLeft: PADDING_RL,
   },
   microDetailsText: {
-    fontFamily: "Lusitana_400Regular",
-    color: CRIMSON_CHOCOLATE,
+    fontFamily: LIGHT_REG_FONT,
+    fontSize: 12,
   },
   editColumn: {
     flex: 1,

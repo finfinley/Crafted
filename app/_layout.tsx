@@ -1,13 +1,22 @@
-// Rest of the import statements
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { Slot } from "expo-router";
+import {
+  Gotu_400Regular
+} from "@expo-google-fonts/gotu";
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_700Bold,
+  Inter_300Light
+} from "@expo-google-fonts/inter";
 import {
   Lusitana_400Regular,
-  Lusitana_700Bold
+  Lusitana_700Bold,
 } from "@expo-google-fonts/lusitana";
-import { View, Text } from "react-native";
+import { Satisfy_400Regular } from "@expo-google-fonts/satisfy";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { OFF_WHITE } from "lib/styles";
+import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,6 +24,12 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     Lusitana_400Regular,
     Lusitana_700Bold,
+    Satisfy_400Regular,
+    Gotu_400Regular,
+    Inter_400Regular,
+    Inter_700Bold,
+    Inter_500Medium,
+    Inter_300Light
   });
 
   useEffect(() => {
@@ -28,18 +43,20 @@ export default function RootLayout() {
   }
 
   return (
-    <>
-      <View style={styles.container}>
-        <Slot />
-      </View>
-    </>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: OFF_WHITE,
+        },
+        headerTitleStyle: {
+          color: OFF_WHITE,
+        },
+      }}
+    >
+      <Stack.Screen
+        name="index"
+        options={{ headerShown: false, headerTitle: "Profile" }}
+      />
+    </Stack>
   );
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: "#25292e",
-    color: "white",
-  },
-};

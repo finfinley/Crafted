@@ -1,9 +1,10 @@
 import { Session } from "@supabase/supabase-js";
 import * as SplashScreen from "expo-splash-screen";
+import { BACKGROUND_COLOR, OFF_WHITE } from "lib/styles";
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import Account from "../components/Account";
-import Auth from "../components/Auth";
+import { StyleSheet, View } from "react-native";
+import Profile from "../components/Profile";
+import Login from "../components/Login";
 import { supabase } from "../lib/supabase";
 
 SplashScreen.preventAutoHideAsync();
@@ -24,9 +25,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       {session && session.user ? (
-        <Account key={session.user.id} session={session} />
+        <Profile key={session.user.id} session={session} />
       ) : (
-        <Auth />
+        <Login />
       )}
     </View>
   );
@@ -35,21 +36,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: BACKGROUND_COLOR,
+    color: OFF_WHITE,
   },
-  // imageContainer: {
-  //   flex: 1,
-  //   paddingTop: 58,
-  // },
-  // footerContainer: {
-  //   flex: 1 / 3,
-  //   alignItems: "center",
-  // },
-  // optionsContainer: {
-  //   position: "absolute",
-  //   bottom: 80,
-  // },
-  // optionsRow: {
-  //   alignItems: "center",
-  //   flexDirection: "row",
-  // },
 });

@@ -3,7 +3,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.words": [
-    "Pressable"
+    "Formik",
+    "Lusitana",
+    "Pressable",
+    "upsert"
   ],
   "deno.enablePaths": [
     "supabase/functions"

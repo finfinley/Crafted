@@ -1,4 +1,5 @@
 import { Input } from "@rneui/themed";
+import { FLORAL_GRAY, HEADER_FONT, OFF_WHITE } from "lib/styles";
 import { StyleSheet } from "react-native";
 
 export default function TextInput({
@@ -13,12 +14,12 @@ export default function TextInput({
     <Input
       label={label}
       leftIcon={icon}
-      inputStyle={{ color: "white" }}
-      selectionColor="#E4CC37"
+      inputStyle={{ color: OFF_WHITE }}
+      selectionColor={FLORAL_GRAY}
       onChangeText={onChange}
       value={value}
       placeholder={placeholder}
-      placeholderTextColor="#87919E"
+      placeholderTextColor={FLORAL_GRAY}
       autoCapitalize={"none"}
       labelStyle={styles.inputFont}
       secureTextEntry={secure}
@@ -28,8 +29,8 @@ export default function TextInput({
 
 const styles = StyleSheet.create({
   inputFont: {
-    fontFamily: "Lusitana_700Bold",
-    color: "#87919E",
+    fontFamily: HEADER_FONT,
+    color: FLORAL_GRAY,
     fontSize: 20,
   },
 });
