@@ -3,13 +3,11 @@ import { UpdateProfile } from "components/UpdateProfile.form";
 import { Stack } from "expo-router";
 import {
   BACKGROUND_COLOR,
-  BOLD_FONT,
   OFF_WHITE,
-  SILK_CHOCOLATE,
-  TAN_GRAY,
+  SILK_CHOCOLATE
 } from "lib/styles";
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, View } from "react-native";
 import { supabase } from "../lib/supabase";
 
 export default function Settings() {

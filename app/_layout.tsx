@@ -1,4 +1,12 @@
 import {
+  Gotu_400Regular
+} from "@expo-google-fonts/gotu";
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_700Bold
+} from "@expo-google-fonts/inter";
+import {
   Lusitana_400Regular,
   Lusitana_700Bold,
 } from "@expo-google-fonts/lusitana";
@@ -16,6 +24,10 @@ export default function RootLayout() {
     Lusitana_400Regular,
     Lusitana_700Bold,
     Satisfy_400Regular,
+    Gotu_400Regular,
+    Inter_400Regular,
+    Inter_700Bold,
+    Inter_500Medium
   });
 
   useEffect(() => {

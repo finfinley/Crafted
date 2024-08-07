@@ -1,5 +1,5 @@
-import { BOLD_FONT, FLORAL_GRAY, SILK_CHOCOLATE, TAN_GRAY } from "lib/styles";
-import React, { useState } from "react";
+import { FLORAL_GRAY, HEADER_FONT, REGULAR_FONT, SILK_CHOCOLATE } from "lib/styles";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
@@ -12,7 +12,6 @@ const data = [
 ];
 
 const DropdownComponent = ({ setFieldValue, value, name }) => {
-
   return (
     <Dropdown
       style={styles.dropdown}
@@ -45,17 +44,17 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 14,
-    fontFamily: BOLD_FONT,
+    fontFamily: REGULAR_FONT,
     color: FLORAL_GRAY,
   },
   textItemsStyle: {
     fontSize: 14,
-    fontFamily: BOLD_FONT,
+    fontFamily: REGULAR_FONT,
     color: SILK_CHOCOLATE,
   },
   selectedTextStyle: {
     fontSize: 14,
-    fontFamily: BOLD_FONT,
+    fontFamily: REGULAR_FONT,
     color: SILK_CHOCOLATE,
   },
 });

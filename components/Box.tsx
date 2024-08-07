@@ -1,6 +1,6 @@
 import {
   BACKGROUND_COLOR,
-  BOLD_FONT,
+  HEADER_FONT,
   OFF_WHITE,
   SILK_CHOCOLATE,
 } from "lib/styles";
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   headerText: {
-    fontFamily: BOLD_FONT,
+    fontFamily: HEADER_FONT,
     color: BACKGROUND_COLOR
   },
 

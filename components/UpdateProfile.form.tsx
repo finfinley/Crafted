@@ -4,13 +4,14 @@ import dayjs from "dayjs";
 import { router } from "expo-router";
 import { Formik } from "formik";
 import {
-  BOLD_FONT,
+  HEADER_FONT,
   DARK_BLUE,
   FLORAL_GRAY,
   OFF_WHITE,
   RED,
   SILK_CHOCOLATE,
   TAN_GRAY,
+  REGULAR_FONT,
 } from "lib/styles";
 import { supabase } from "lib/supabase";
 import React from "react";
@@ -130,6 +131,7 @@ export const UpdateProfile = ({}) => {
           {/* Buttons */}
           <View style={styles.buttonContainer}>
             <Button
+              titleStyle={styles.buttonTitle}
               style={styles.button}
               color={DARK_BLUE}
               title="Save"
@@ -137,6 +139,7 @@ export const UpdateProfile = ({}) => {
               onPress={() => handleSubmit()}
             />
             <Button
+              titleStyle={styles.buttonTitle}
               style={styles.button}
               color={RED}
               title="Log Out"
@@ -163,12 +166,12 @@ const styles = StyleSheet.create({
     color: TAN_GRAY,
   },
   inputFont: {
-    fontFamily: BOLD_FONT,
+    fontFamily: REGULAR_FONT,
     color: SILK_CHOCOLATE,
     fontSize: 14,
   },
   inputLabel: {
-    fontFamily: BOLD_FONT,
+    fontFamily: REGULAR_FONT,
     color: FLORAL_GRAY,
     fontSize: 14,
   },
@@ -184,9 +187,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
   },
+  buttonTitle: {
+    fontFamily: REGULAR_FONT,
+  },
   button: {
     width: 150,
     height: 200,
+    fontFamily: REGULAR_FONT,
     paddingRight: PADDING_RL,
     paddingLeft: PADDING_RL,
   },

@@ -1,14 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Session } from "@supabase/supabase-js";
 import { Link } from "expo-router";
-import { BOLD_FONT, OFF_WHITE, REGULAR_FONT, SILK_CHOCOLATE } from "lib/styles";
+import { BOLD_REG_FONT, HEADER_FONT, REGULAR_FONT, SILK_CHOCOLATE, VINTAGE_WHITE } from "lib/styles";
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
 import ImageViewer from "./ImageViewer";
 
-export default function Account({ session }: { session: Session }) {
+export default function Profile({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     width: "auto",
   },
   profileContainer: {
-    backgroundColor: OFF_WHITE,
+    backgroundColor: VINTAGE_WHITE,
     alignSelf: "center",
     borderRadius: 8,
     width: 350,
@@ -173,12 +173,12 @@ const styles = StyleSheet.create({
   },
   profileUsername: {
     fontSize: 20,
-    fontFamily: BOLD_FONT,
+    fontFamily: HEADER_FONT,
     alignSelf: "center",
     color: SILK_CHOCOLATE,
   },
   profileLocation: {
-    fontFamily: REGULAR_FONT,
+    fontFamily: BOLD_REG_FONT,
     alignSelf: "center",
   },
   profileBio: {
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   microDetailsText: {
     fontFamily: REGULAR_FONT,
-    // color: SILK_CHOCOLATE,
+   fontSize: 12.5,
   },
   editColumn: {
     flex: 1,

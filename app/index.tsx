@@ -3,8 +3,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { BACKGROUND_COLOR, OFF_WHITE } from "lib/styles";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import Account from "../components/Account";
-import Auth from "../components/Auth";
+import Profile from "../components/Profile";
+import Login from "../components/Login";
 import { supabase } from "../lib/supabase";
 
 SplashScreen.preventAutoHideAsync();
@@ -25,9 +25,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       {session && session.user ? (
-        <Account key={session.user.id} session={session} />
+        <Profile key={session.user.id} session={session} />
       ) : (
-        <Auth />
+        <Login />
       )}
     </View>
   );

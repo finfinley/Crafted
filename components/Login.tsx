@@ -1,12 +1,11 @@
 import { Button } from "@rneui/themed";
 import {
-  BOLD_FONT,
   CURSIVE_FONT,
   DARK_BLUE,
   GRAY,
+  HEADER_FONT,
   LIGHT_GRAY,
   PALE_YELLOW,
-  PIRATE_TAN,
   REGULAR_FONT
 } from "lib/styles";
 import React, { useState } from "react";
@@ -26,7 +25,7 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-export default function Auth() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -145,6 +144,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontFamily: REGULAR_FONT,
+    fontFamily: HEADER_FONT,
   },
 });
