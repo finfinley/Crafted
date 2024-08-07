@@ -102,7 +102,7 @@ export default function Profile({ session }: { session: Session }) {
           <View style={styles.microDetailsRow}>
             <View style={styles.profileMicroDetails}>
               <Text style={styles.microDetailsText}>66 Followers</Text>
-              <Text style={styles.microDetailsText}>Follows 27</Text>
+              <Text style={styles.microDetailsText}>27 Following</Text>
             </View>
             {isUserLoggedIn(session, id) && (
               <View style={styles.editColumn}>
