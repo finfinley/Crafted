@@ -1,7 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Session } from "@supabase/supabase-js";
 import { Link } from "expo-router";
-import { BOLD_REG_FONT, HEADER_FONT, REGULAR_FONT, SILK_CHOCOLATE, VINTAGE_WHITE } from "lib/styles";
+import {
+  BOLD_REG_FONT,
+  HEADER_FONT,
+  LIGHT_REG_FONT,
+  REGULAR_FONT,
+  SILK_CHOCOLATE,
+  VINTAGE_WHITE,
+} from "lib/styles";
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
@@ -10,12 +17,14 @@ import ImageViewer from "./ImageViewer";
 
 export default function Profile({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [bannerUrl, setBannerUrl] = useState("");
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
-  const [id, setId] = useState("");
+  const [handle, setHandle] = useState();
+  const [avatarUrl, setAvatarUrl] = useState();
+  const [bannerUrl, setBannerUrl] = useState();
+  const [bio, setBio] = useState();
+  const [location, setLocation] = useState();
+  const [id, setId] = useState();
+  const [pronouns, setPronouns] = useState();
+  const [pronounsVisible, setPronounsVisible] = useState();
 
   useEffect(() => {
     if (session) getProfile();
@@ -29,7 +38,9 @@ export default function Profile({ session }: { session: Session }) {
       // Profile Data
       const { data, error, status } = await supabase
         .from("profiles")
-        .select(`id, username, avatar_url, banner_url, location, bio`)
+        .select(
+          `id, handle, avatar_url, banner_url, location, bio, pronouns, pronouns_visible`
+        )
         .eq("id", session?.user.id) // Change this eventually
         .single();
 
@@ -38,7 +49,9 @@ export default function Profile({ session }: { session: Session }) {
       }
 
       if (data) {
-        setUsername(data.username);
+        setHandle(data.handle);
+        setPronouns(data.pronouns);
+        setPronounsVisible(data.pronouns_visible);
         setAvatarUrl(data.avatar_url);
         setBannerUrl(data.banner_url);
         setLocation(data.location);
@@ -78,7 +91,10 @@ export default function Profile({ session }: { session: Session }) {
         <View style={styles.profileDetailContainer}>
           {/* Main Profile Details */}
           <View>
-            <Text style={styles.profileUsername}>@{username}</Text>
+            <Text style={styles.profileHandle}>@{handle}</Text>
+            {pronounsVisible && (
+              <Text style={styles.profilePronouns}>{pronouns}</Text>
+            )}
             <Text style={styles.profileLocation}>📍{location}</Text>
             <Text style={[styles.profileBio, styles.mt20]}>{bio}</Text>
           </View>
@@ -101,27 +117,6 @@ export default function Profile({ session }: { session: Session }) {
           </View>
         </View>
       </View>
-      {/* <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
-      </View>
-
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title={loading ? 'Loading ...' : 'Update'}
-          onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
-          disabled={loading}
-        />
-      </View> */}
-
-      {/* <View>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
-      </View> */}
     </View>
   );
 }
@@ -171,11 +166,17 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  profileUsername: {
+  profileHandle: {
     fontSize: 20,
     fontFamily: HEADER_FONT,
     alignSelf: "center",
     color: SILK_CHOCOLATE,
+  },
+  profilePronouns: {
+    paddingTop: 0,
+    fontFamily: LIGHT_REG_FONT,
+    alignSelf: "center",
+    fontSize: 12,
   },
   profileLocation: {
     fontFamily: BOLD_REG_FONT,
@@ -196,8 +197,8 @@ const styles = StyleSheet.create({
     paddingLeft: PADDING_RL,
   },
   microDetailsText: {
-    fontFamily: REGULAR_FONT,
-   fontSize: 12.5,
+    fontFamily: LIGHT_REG_FONT,
+    fontSize: 12,
   },
   editColumn: {
     flex: 1,

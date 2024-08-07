@@ -12,6 +12,7 @@ export const DARK_BLUE = "#3D405B";
 export const PIRATE_TAN = "#948767";
 export const RED = "#874741";
 /* FONTS */
+export const LIGHT_REG_FONT = "Inter_300Light";
 export const REGULAR_FONT = "Inter_400Regular";
 export const BOLD_REG_FONT = "Inter_700Bold";
 export const HEADER_FONT = "Gotu_400Regular";

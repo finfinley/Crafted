@@ -4,7 +4,8 @@ import {
 import {
   Inter_400Regular,
   Inter_500Medium,
-  Inter_700Bold
+  Inter_700Bold,
+  Inter_300Light
 } from "@expo-google-fonts/inter";
 import {
   Lusitana_400Regular,
@@ -27,7 +28,8 @@ export default function RootLayout() {
     Gotu_400Regular,
     Inter_400Regular,
     Inter_700Bold,
-    Inter_500Medium
+    Inter_500Medium,
+    Inter_300Light
   });
 
   useEffect(() => {

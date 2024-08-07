@@ -1,42 +1,140 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Button, CheckBox, Input } from "@rneui/themed";
+import { UserData } from "app/settings";
 import dayjs from "dayjs";
 import { router } from "expo-router";
 import { Formik } from "formik";
 import {
-  HEADER_FONT,
   DARK_BLUE,
   FLORAL_GRAY,
   OFF_WHITE,
   RED,
+  REGULAR_FONT,
   SILK_CHOCOLATE,
   TAN_GRAY,
-  REGULAR_FONT,
 } from "lib/styles";
 import { supabase } from "lib/supabase";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import Box from "./Box";
 import DropdownComponent from "./form/Dropdown";
+
+export enum Pronouns {
+  HeHim = "He / Him",
+  SheHer = "She / Her",
+  TheyThem = "They / Them",
+  NoPronouns = "No Pronouns",
+  AnyPronouns = "Any Pronouns",
+}
+
+type FormValues = {
+  handle: string;
+  location: string;
+  bio: string;
+  email: string;
+  pronouns: {
+    selected: Pronouns;
+    visible: boolean;
+  };
+  birthday: Date;
+};
+
+type UpdateProfileFuncProps = FormValues & {
+  setLoading: (loading: boolean) => void;
+  session: any;
+};
 
 export function logout() {
   supabase.auth.signOut();
   router.replace("/");
 }
 
-export const UpdateProfile = ({}) => {
-  const twentyOneYearsAgo = dayjs(new Date()).subtract(21, "years").toDate();
+export function backToProfile() {
+  router.replace("/");
+}
+
+async function updateProfile({
+  setLoading,
+  session,
+  handle,
+  location,
+  bio,
+  email,
+  pronouns,
+  birthday,
+}: UpdateProfileFuncProps) {
+  try {
+    setLoading(true);
+    if (!session?.user) throw new Error("No user on the session!");
+
+    const { selected, visible: pronounsVisible } = pronouns;
+
+    const updates = {
+      handle: handle,
+      bio,
+      location,
+      pronouns: selected,
+      pronouns_visible: pronounsVisible,
+      birthday,
+      updated_at: new Date(),
+    };
+
+    console.debug("Updating profile with", birthday);
+
+    const { error, data, statusText } = await supabase
+      .from("profiles")
+      .update(updates);
+
+    if (email) {
+      const { error: emailError, data: emailData } =
+        await supabase.auth.updateUser({ email });
+
+      if (emailError) {
+        console.error("Error updating profile", emailError);
+        throw emailError;
+      }
+    }
+
+    if (error) {
+      throw error;
+    }
+
+    backToProfile();
+  } catch (error) {
+    console.error("Error updating profile", error);
+    if (error instanceof Error) {
+      Alert.alert(error.message);
+    }
+  } finally {
+    setLoading(false);
+  }
+}
+
+export const UpdateProfile = ({
+  session,
+  userData,
+}: {
+  session: any;
+  userData: UserData;
+}) => {
+  const [loading, setLoading] = React.useState(false);
+
+  const { bio, birthday, handle, location, pronouns, pronouns_visible } =
+    userData;
+  console.log(session.user.email);
   return (
     <Formik
       initialValues={{
-        displayName: "",
-        location: "",
-        bio: "",
-        email: "",
-        pronouns: { pronouns: "", visible: false },
-        birthday: twentyOneYearsAgo,
+        handle: handle ?? null,
+        location: location ?? null,
+        bio: bio ?? null,
+        email: session.user.email ?? null,
+        pronouns: { selected: pronouns ?? null, visible: pronouns_visible },
+        birthday: dayjs(birthday).toDate() ?? null,
       }}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={async (values: FormValues) =>
+        await updateProfile({ setLoading, session, ...values })
+      }
     >
       {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
         <View>
@@ -47,9 +145,9 @@ export const UpdateProfile = ({}) => {
                 labelStyle={styles.inputLabel}
                 inputStyle={[styles.inputFont]}
                 placeholderTextColor={FLORAL_GRAY}
-                onChangeText={handleChange("displayName")}
+                onChangeText={handleChange("handle")}
                 onBlur={handleBlur("displayName")}
-                value={values.displayName}
+                value={values.handle}
               />
             </View>
             <View style={styles.row}>
@@ -94,9 +192,9 @@ export const UpdateProfile = ({}) => {
             <View style={{ flexDirection: "row" }}>
               <View style={{ width: "50%" }}>
                 <DropdownComponent
-                  name="pronouns.pronouns"
+                  name="pronouns.selected"
                   setFieldValue={setFieldValue}
-                  value={values.pronouns.pronouns}
+                  value={values.pronouns.selected}
                 />
               </View>
               <View>
@@ -105,7 +203,7 @@ export const UpdateProfile = ({}) => {
                   containerStyle={{ backgroundColor: OFF_WHITE, padding: 0 }}
                   title="Visible on Profile"
                   checked={values.pronouns.visible}
-                  textStyle={[styles.inputLabel, { marginLeft: 3 }]}
+                  textStyle={[styles.inputFont, { marginLeft: 3 }]}
                   checkedColor={SILK_CHOCOLATE}
                   onPress={() =>
                     setFieldValue("pronouns.visible", !values.pronouns.visible)
@@ -114,18 +212,24 @@ export const UpdateProfile = ({}) => {
               </View>
             </View>
             <View style={styles.row}>
-              <View>
-                <Text style={[styles.inputFont, styles.datePickerLabel]}>
-                  Birthday:
-                </Text>
-                <DateTimePicker
-                  maximumDate={twentyOneYearsAgo}
-                  value={dayjs(values.birthday).toDate()}
-                  accentColor={FLORAL_GRAY}
-                  textColor={FLORAL_GRAY}
-                  onChange={() => handleChange("birthday")}
-                />
-              </View>
+              <Text style={[styles.inputFont, styles.datePickerLabel]}>
+                Birthday:
+              </Text>
+            </View>
+            <View style={[styles.row]}>
+              <DateTimePicker
+                value={values.birthday}
+                accentColor={FLORAL_GRAY}
+                textColor={FLORAL_GRAY}
+                style={{ width: "35%", marginLeft: 0}}
+                
+                onChange={(val) =>
+                  setFieldValue(
+                    "birthday",
+                    dayjs(val.nativeEvent.timestamp).toDate()
+                  )
+                }
+              />
             </View>
           </Box>
           {/* Buttons */}
@@ -135,7 +239,7 @@ export const UpdateProfile = ({}) => {
               style={styles.button}
               color={DARK_BLUE}
               title="Save"
-              // disabled={loading}
+              disabled={loading}
               onPress={() => handleSubmit()}
             />
             <Button
@@ -143,7 +247,7 @@ export const UpdateProfile = ({}) => {
               style={styles.button}
               color={RED}
               title="Log Out"
-              // disabled={loading}
+              disabled={loading}
               onPress={() => {
                 logout();
               }}
@@ -159,7 +263,7 @@ const PADDING_RL = 8;
 
 const styles = StyleSheet.create({
   row: {
-    alignItems: "center",
+    // alignItems: "center",
     flexDirection: "row",
   },
   input: {

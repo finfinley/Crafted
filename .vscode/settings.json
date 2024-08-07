@@ -5,7 +5,8 @@
   "cSpell.words": [
     "Formik",
     "Lusitana",
-    "Pressable"
+    "Pressable",
+    "upsert"
   ],
   "deno.enablePaths": [
     "supabase/functions"
