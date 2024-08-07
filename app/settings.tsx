@@ -1,7 +1,7 @@
 import { Session } from "@supabase/supabase-js";
 import { Pronouns, UpdateProfile } from "components/UpdateProfile.form";
 import { Stack } from "expo-router";
-import { BACKGROUND_COLOR, OFF_WHITE, SILK_CHOCOLATE } from "lib/styles";
+import { BACKGROUND_COLOR, SILK_CHOCOLATE, VINTAGE_WHITE } from "lib/styles";
 import React, { useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import { supabase } from "../lib/supabase";
@@ -74,7 +74,7 @@ export default function Settings() {
         <Stack.Screen
           options={{
             title: "Edit Profile",
-            headerTintColor: OFF_WHITE,
+            headerTintColor: VINTAGE_WHITE,
             headerStyle: { backgroundColor: SILK_CHOCOLATE },
           }}
         />
