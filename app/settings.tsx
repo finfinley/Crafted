@@ -1,15 +1,16 @@
 import { Session } from "@supabase/supabase-js";
-import { Pronouns, UpdateProfile } from "components/UpdateProfile.form";
+import { Pronouns, UpdateProfile } from "components/forms/UpdateProfile.form";
 import { Stack } from "expo-router";
 import { BACKGROUND_COLOR, SILK_CHOCOLATE, VINTAGE_WHITE } from "lib/styles";
 import React, { useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
+import "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler";
 import { supabase } from "../lib/supabase";
 
 export type UserData = {
   id: string;
   avatar_url: string;
-  banner_url: string;
   location: string;
   bio: string;
   handle: string;
@@ -42,7 +43,7 @@ export default function Settings() {
       const { data, error, status } = await supabase
         .from("profiles")
         .select(
-          `id, avatar_url, banner_url, location, bio, handle, pronouns, pronouns_visible, birthday`
+          `id, avatar_url, location, bio, handle, pronouns, pronouns_visible, birthday`
         )
         .eq("id", session?.user.id) // Change this eventually
         .single();
@@ -70,7 +71,7 @@ export default function Settings() {
 
   if (data) {
     return (
-      <View style={{ backgroundColor: BACKGROUND_COLOR, height: "100%" }}>
+      <ScrollView style={{ backgroundColor: BACKGROUND_COLOR, height: "100%" }}>
         <Stack.Screen
           options={{
             title: "Edit Profile",
@@ -79,7 +80,7 @@ export default function Settings() {
           }}
         />
         <UpdateProfile session={session} userData={data} />
-      </View>
+      </ScrollView>
     );
   }
 }

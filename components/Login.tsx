@@ -5,13 +5,12 @@ import {
   GRAY,
   HEADER_FONT,
   LIGHT_GRAY,
-  PALE_YELLOW,
-  REGULAR_FONT
+  PALE_YELLOW
 } from "lib/styles";
 import React, { useState } from "react";
 import { Alert, AppState, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
-import TextInput from "./form/TextInput";
+import TextInput from "./input/TextInput";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
