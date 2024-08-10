@@ -1,4 +1,4 @@
-import { FLORAL_GRAY, HEADER_FONT, REGULAR_FONT, SILK_CHOCOLATE } from "lib/styles";
+import { FLORAL_GRAY, REGULAR_FONT, SILK_CHOCOLATE } from "lib/styles";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";

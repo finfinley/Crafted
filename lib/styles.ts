@@ -17,3 +17,5 @@ export const REGULAR_FONT = "Inter_400Regular";
 export const BOLD_REG_FONT = "Inter_700Bold";
 export const HEADER_FONT = "Gotu_400Regular";
 export const CURSIVE_FONT = "Satisfy_400Regular"
+/* COMMON */
+export const PADDING_RL = 8;

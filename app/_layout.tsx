@@ -1,11 +1,9 @@
+import { Gotu_400Regular } from "@expo-google-fonts/gotu";
 import {
-  Gotu_400Regular
-} from "@expo-google-fonts/gotu";
-import {
+  Inter_300Light,
   Inter_400Regular,
   Inter_500Medium,
   Inter_700Bold,
-  Inter_300Light
 } from "@expo-google-fonts/inter";
 import {
   Lusitana_400Regular,
@@ -17,6 +15,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { OFF_WHITE } from "lib/styles";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,7 +28,7 @@ export default function RootLayout() {
     Inter_400Regular,
     Inter_700Bold,
     Inter_500Medium,
-    Inter_300Light
+    Inter_300Light,
   });
 
   useEffect(() => {
@@ -43,20 +42,22 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: OFF_WHITE,
-        },
-        headerTitleStyle: {
-          color: OFF_WHITE,
-        },
-      }}
-    >
-      <Stack.Screen
-        name="index"
-        options={{ headerShown: false, headerTitle: "Profile" }}
-      />
-    </Stack>
+    <GestureHandlerRootView>
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: OFF_WHITE,
+          },
+          headerTitleStyle: {
+            color: OFF_WHITE,
+          },
+        }}
+      >
+        <Stack.Screen
+          name="index"
+          options={{ headerShown: false, headerTitle: "Profile" }}
+        />
+      </Stack>
+    </GestureHandlerRootView>
   );
 }

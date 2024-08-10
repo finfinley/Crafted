@@ -1,14 +1,13 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Button, CheckBox, Input } from "@rneui/themed";
+import { CheckBox, Input } from "@rneui/themed";
 import { UserData } from "app/settings";
+import CraftedButton from "components/buttons/CraftedButton";
 import dayjs from "dayjs";
 import { router } from "expo-router";
 import { Formik } from "formik";
 import {
-  DARK_BLUE,
   FLORAL_GRAY,
   OFF_WHITE,
-  RED,
   REGULAR_FONT,
   SILK_CHOCOLATE,
   TAN_GRAY,
@@ -16,8 +15,9 @@ import {
 import { supabase } from "lib/supabase";
 import React from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import Box from "./Box";
-import DropdownComponent from "./form/Dropdown";
+import Box from "../Box";
+import DropdownComponent from "../input/Dropdown";
+import { UpdateAvatar } from "./UpdateAvatar.form";
 
 export enum Pronouns {
   HeHim = "He / Him",
@@ -28,6 +28,7 @@ export enum Pronouns {
 }
 
 type FormValues = {
+  avatar: string;
   handle: string;
   location: string;
   bio: string;
@@ -62,6 +63,7 @@ async function updateProfile({
   email,
   pronouns,
   birthday,
+  avatar,
 }: UpdateProfileFuncProps) {
   try {
     setLoading(true);
@@ -70,6 +72,7 @@ async function updateProfile({
     const { selected, visible: pronounsVisible } = pronouns;
 
     const updates = {
+      avatar_url: avatar,
       handle: handle,
       bio,
       location,
@@ -78,12 +81,7 @@ async function updateProfile({
       birthday,
       updated_at: new Date(),
     };
-
-    console.debug("Updating profile with", birthday);
-
-    const { error, data, statusText } = await supabase
-      .from("profiles")
-      .update(updates);
+    const { error } = await supabase.from("profiles").update(updates);
 
     if (email) {
       const { error: emailError, data: emailData } =
@@ -119,12 +117,20 @@ export const UpdateProfile = ({
 }) => {
   const [loading, setLoading] = React.useState(false);
 
-  const { bio, birthday, handle, location, pronouns, pronouns_visible } =
-    userData;
-  console.log(session.user.email);
+  const {
+    bio,
+    birthday,
+    handle,
+    location,
+    pronouns,
+    pronouns_visible,
+    avatar_url,
+  } = userData;
+
   return (
     <Formik
       initialValues={{
+        avatar: avatar_url,
         handle: handle ?? null,
         location: location ?? null,
         bio: bio ?? null,
@@ -138,6 +144,14 @@ export const UpdateProfile = ({
     >
       {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
         <View>
+          <UpdateAvatar
+            setNewAvatar={setFieldValue}
+            session={session}
+            avatar={values.avatar}
+            loading={loading}
+            setLoading={setLoading}
+          />
+
           <Box title="Profile Details">
             <View style={styles.row}>
               <Input
@@ -221,8 +235,7 @@ export const UpdateProfile = ({
                 value={values.birthday}
                 accentColor={FLORAL_GRAY}
                 textColor={FLORAL_GRAY}
-                style={{ width: "35%", marginLeft: 0}}
-                
+                style={{ width: "35%", marginLeft: 0 }}
                 onChange={(val) =>
                   setFieldValue(
                     "birthday",
@@ -234,23 +247,24 @@ export const UpdateProfile = ({
           </Box>
           {/* Buttons */}
           <View style={styles.buttonContainer}>
-            <Button
+            {/* <Button
               titleStyle={styles.buttonTitle}
               style={styles.button}
               color={DARK_BLUE}
               title="Save"
               disabled={loading}
               onPress={() => handleSubmit()}
+            /> */}
+            <CraftedButton
+              title={"Save"}
+              onPress={handleSubmit}
+              loading={loading}
             />
-            <Button
-              titleStyle={styles.buttonTitle}
-              style={styles.button}
-              color={RED}
-              title="Log Out"
-              disabled={loading}
-              onPress={() => {
-                logout();
-              }}
+            <CraftedButton
+              title={"Log Out"}
+              onPress={logout}
+              loading={loading}
+              danger
             />
           </View>
         </View>
