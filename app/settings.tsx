@@ -1,7 +1,8 @@
 import { Session } from "@supabase/supabase-js";
-import { Pronouns, UpdateProfile } from "components/forms/UpdateProfile.form";
+import { Pronouns } from "components/forms/types";
+import { UpdateProfile } from "components/sections/UpdateProfile";
 import { Stack } from "expo-router";
-import { BACKGROUND_COLOR, SILK_CHOCOLATE, VINTAGE_WHITE } from "lib/styles";
+import { BACKGROUND_COLOR, SILK_CHOCOLATE } from "lib/styles";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import "react-native-gesture-handler";
@@ -75,7 +76,7 @@ export default function Settings() {
         <Stack.Screen
           options={{
             title: "Edit Profile",
-            headerTintColor: VINTAGE_WHITE,
+            headerTintColor: "white",
             headerStyle: { backgroundColor: SILK_CHOCOLATE },
           }}
         />
