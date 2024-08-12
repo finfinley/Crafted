@@ -62,19 +62,18 @@ export function UpdateAvatar({
         );
 
       if (data) {
-        await supabase.storage
+        const { data: dataUrl } = supabase.storage
           .from("avatars")
-          .createSignedUrl(data.path, 86400 * 2000)
-          .then(({ data }) => {
-            setNewAvatar("avatar", data.signedUrl);
-          })
-          .catch((error) => {
-            setLoading(false);
-            console.error({ error });
-            alert(
-              "An error occurred while updating the image. Please try again."
-            );
-          });
+          .getPublicUrl(data.path);
+
+        if (dataUrl.publicUrl) {
+          setNewAvatar("avatar", dataUrl.publicUrl);
+        } else {
+          setLoading(false);
+          alert(
+            "An error occurred while updating the image. Please try again."
+          );
+        }
       }
 
       if (error) {
