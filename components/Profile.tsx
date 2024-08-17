@@ -5,9 +5,9 @@ import {
   BOLD_REG_FONT,
   HEADER_FONT,
   LIGHT_REG_FONT,
+  OFF_WHITE,
   REGULAR_FONT,
-  SILK_CHOCOLATE,
-  VINTAGE_WHITE,
+  SILK_CHOCOLATE
 } from "lib/styles";
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
@@ -107,7 +107,7 @@ export default function Profile({ session }: { session: Session }) {
             {isUserLoggedIn(session, id) && (
               <View style={styles.editColumn}>
                 <Link
-                  href={{ pathname: "settings" }}
+                  href={{ pathname: "edit-profile" }}
                   style={{ alignSelf: "flex-end" }}
                 >
                   <MaterialIcons size={22} name="edit" color={SILK_CHOCOLATE} />
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     width: "auto",
   },
   profileContainer: {
-    backgroundColor: VINTAGE_WHITE,
+    backgroundColor: OFF_WHITE,
     alignSelf: "center",
     borderRadius: 8,
     width: 350,

@@ -8,7 +8,7 @@ import { supabase } from "lib/supabase";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-export function UpdateAvatar({
+export function UpdateAvatarForm({
   avatar,
   session,
   setNewAvatar,
