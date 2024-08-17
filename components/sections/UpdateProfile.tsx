@@ -1,4 +1,4 @@
-import { UserData } from "app/edit-profile";
+import { UserData } from "app/(app)/edit-profile";
 import CraftedButton from "components/buttons/CraftedButton";
 import { UpdateAvatarForm } from "components/forms/UpdateAvatar.form";
 import { UpdateProfileForm } from "components/forms/UpdateProfile.form";
@@ -70,15 +70,6 @@ export const UpdateProfile = ({
             />
           </View>
           {/* Danger Zone */}
-
-          <View style={styles.buttonContainer}>
-            <CraftedButton
-              title={"Request Password Reset"}
-              onPress={() => requestPasswordLink(session.user.email)}
-              loading={loading}
-              buttonStyles={[styles.dangerButton, styles.w300]}
-            />
-          </View>
           <View style={styles.buttonContainer}>
             <CraftedButton
               title={"Delete Account"}

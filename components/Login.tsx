@@ -1,67 +1,22 @@
 import { Button } from "@rneui/themed";
+import { router } from "expo-router";
+import { useSession } from "lib/ctx";
 import {
   CURSIVE_FONT,
   DARK_BLUE,
   GRAY,
   HEADER_FONT,
   LIGHT_GRAY,
-  PALE_YELLOW
+  PALE_YELLOW,
 } from "lib/styles";
 import React, { useState } from "react";
-import { Alert, AppState, StyleSheet, Text, View } from "react-native";
-import { supabase } from "../lib/supabase";
+import { StyleSheet, Text, View } from "react-native";
 import TextInput from "./input/TextInput";
 
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
-AppState.addEventListener("change", (state) => {
-  if (state === "active") {
-    supabase.auth.startAutoRefresh();
-  } else {
-    supabase.auth.stopAutoRefresh();
-  }
-});
-
 export default function Login() {
+  const { login, signUp, loading } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function signInWithEmail() {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-
-    if (error) {
-      Alert.alert(error.message);
-    }
-
-    setLoading(false);
-  }
-
-  async function signUpWithEmail() {
-    setLoading(true);
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) {
-      console.log({ error });
-      Alert.alert(error.message);
-    }
-
-    if (!session && !error)
-      Alert.alert("Please check your inbox for email verification!");
-    setLoading(false);
-  }
 
   return (
     <View style={styles.container}>
@@ -107,7 +62,10 @@ export default function Login() {
         color={DARK_BLUE}
         title="Sign in"
         disabled={loading}
-        onPress={() => signInWithEmail()}
+        onPress={() => {
+          login(email, password);
+          router.replace("/");
+        }}
       />
       <Button
         titleStyle={styles.title}
@@ -115,7 +73,10 @@ export default function Login() {
         style={[styles.button]}
         title="Sign up"
         disabled={loading}
-        onPress={() => signUpWithEmail()}
+        onPress={() => {
+          signUp(email, password);
+          router.replace("/");
+        }}
       />
     </View>
   );

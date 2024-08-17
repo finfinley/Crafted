@@ -73,6 +73,7 @@ export const UpdateProfileForm = ({
             onChangeText={handleChange("email")}
             onBlur={handleBlur("email")}
             value={values.email}
+            disabled
           />
         </View>
         <View style={{ flexDirection: "row" }}>
