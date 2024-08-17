@@ -11,9 +11,9 @@ import {
 } from "@expo-google-fonts/lusitana";
 import { Satisfy_400Regular } from "@expo-google-fonts/satisfy";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { OFF_WHITE } from "lib/styles";
+import { AuthProvider } from "lib/ctx";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -43,21 +43,9 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: OFF_WHITE,
-          },
-          headerTitleStyle: {
-            color: OFF_WHITE,
-          },
-        }}
-      >
-        <Stack.Screen
-          name="index"
-          options={{ headerShown: false, headerTitle: "Profile" }}
-        />
-      </Stack>
+      <AuthProvider>
+        <Slot />
+      </AuthProvider>
     </GestureHandlerRootView>
   );
 }

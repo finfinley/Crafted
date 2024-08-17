@@ -7,7 +7,9 @@ import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import "react-native-gesture-handler";
 import { ScrollView } from "react-native-gesture-handler";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
+import { useSession } from "lib/ctx";
+import AppLoading from 'expo-app-loading';
 
 export type UserData = {
   id: string;
@@ -22,18 +24,9 @@ export type UserData = {
 
 export default function EditProfile() {
   const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState<Session | null>(null);
+  const { session } = useSession();
   const [data, setData] = useState<UserData | null>(null);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
 
   async function getProfile() {
     try {
@@ -69,6 +62,10 @@ export default function EditProfile() {
   useEffect(() => {
     if (session) getProfile();
   }, [session]);
+
+  if (loading) {
+    return <AppLoading />
+  }
 
   if (data) {
     return (

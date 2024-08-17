@@ -1,4 +1,4 @@
-import { UserData } from "app/edit-profile";
+import { UserData } from "app/(app)/edit-profile";
 import CraftedButton from "components/buttons/CraftedButton";
 import { UpdateAvatarForm } from "components/forms/UpdateAvatar.form";
 import { UpdateProfileForm } from "components/forms/UpdateProfile.form";
