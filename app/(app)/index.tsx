@@ -17,6 +17,7 @@ export default function App() {
           title: "Profile",
           headerTintColor: "white",
           headerStyle: { backgroundColor: SILK_CHOCOLATE },
+          headerShown: false,
         }}
       />
       <Profile key={session.user.id} session={session} />

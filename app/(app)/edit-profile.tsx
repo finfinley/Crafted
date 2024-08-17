@@ -1,15 +1,13 @@
-import { Session } from "@supabase/supabase-js";
 import { Pronouns } from "components/forms/types";
 import { UpdateProfile } from "components/sections/UpdateProfile";
 import { Stack } from "expo-router";
+import { useSession } from "lib/ctx";
 import { BACKGROUND_COLOR, SILK_CHOCOLATE } from "lib/styles";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import "react-native-gesture-handler";
 import { ScrollView } from "react-native-gesture-handler";
 import { supabase } from "../../lib/supabase";
-import { useSession } from "lib/ctx";
-import AppLoading from 'expo-app-loading';
 
 export type UserData = {
   id: string;
@@ -26,7 +24,6 @@ export default function EditProfile() {
   const [loading, setLoading] = useState(true);
   const { session } = useSession();
   const [data, setData] = useState<UserData | null>(null);
-
 
   async function getProfile() {
     try {
@@ -64,7 +61,7 @@ export default function EditProfile() {
   }, [session]);
 
   if (loading) {
-    return <AppLoading />
+    return null;
   }
 
   if (data) {

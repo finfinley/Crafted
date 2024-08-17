@@ -37,16 +37,6 @@ export async function updateProfile({
     };
     const { error } = await supabase.from("profiles").update(updates);
 
-    if (email) {
-      const { error: emailError, data: emailData } =
-        await supabase.auth.updateUser({ email });
-
-      if (emailError) {
-        console.error("Error updating profile", emailError);
-        throw emailError;
-      }
-    }
-
     if (error) {
       throw error;
     }

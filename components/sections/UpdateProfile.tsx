@@ -70,15 +70,6 @@ export const UpdateProfile = ({
             />
           </View>
           {/* Danger Zone */}
-
-          <View style={styles.buttonContainer}>
-            <CraftedButton
-              title={"Request Password Reset"}
-              onPress={() => requestPasswordLink(session.user.email)}
-              loading={loading}
-              buttonStyles={[styles.dangerButton, styles.w300]}
-            />
-          </View>
           <View style={styles.buttonContainer}>
             <CraftedButton
               title={"Delete Account"}
