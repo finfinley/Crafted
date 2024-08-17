@@ -1,5 +1,5 @@
 import { Pronouns } from "components/forms/types";
-import { UpdateProfile } from "components/sections/UpdateProfile";
+import { UpdateProfile } from "screens/UpdateProfile";
 import { Stack } from "expo-router";
 import { useSession } from "lib/ctx";
 import { BACKGROUND_COLOR, SILK_CHOCOLATE } from "lib/styles";
@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import "react-native-gesture-handler";
 import { ScrollView } from "react-native-gesture-handler";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "lib/supabase";
 
 export type UserData = {
   id: string;

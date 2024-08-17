@@ -1,4 +1,4 @@
-import { UpdateSettings } from "components/sections/UpdateSettings";
+import { UpdateSettings } from "screens/UpdateSettings";
 import { Stack } from "expo-router";
 import { BACKGROUND_COLOR, SILK_CHOCOLATE } from "lib/styles";
 import { ScrollView } from "react-native-gesture-handler";

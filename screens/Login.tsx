@@ -11,7 +11,7 @@ import {
 } from "lib/styles";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import TextInput from "./input/TextInput";
+import TextInput from "../components/input/TextInput";
 
 export default function Login() {
   const { login, signUp, loading } = useSession();

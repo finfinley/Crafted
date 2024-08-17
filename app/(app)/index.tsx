@@ -3,7 +3,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useSession } from "lib/ctx";
 import { BACKGROUND_COLOR, OFF_WHITE, SILK_CHOCOLATE } from "lib/styles";
 import { StyleSheet, View } from "react-native";
-import Profile from "../../components/Profile";
+import Profile from "screens/Profile";
 
 SplashScreen.preventAutoHideAsync();
 

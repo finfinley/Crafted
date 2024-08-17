@@ -13,7 +13,7 @@ import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { supabase } from "../lib/supabase";
-import ImageViewer from "./ImageViewer";
+import ImageViewer from "../components/ImageViewer";
 
 export default function Profile({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
