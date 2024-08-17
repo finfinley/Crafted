@@ -1,9 +1,9 @@
-import { UserData } from "app/settings";
+import { UserData } from "app/edit-profile";
 import CraftedButton from "components/buttons/CraftedButton";
 import { UpdateAvatarForm } from "components/forms/UpdateAvatar.form";
 import { UpdateProfileForm } from "components/forms/UpdateProfile.form";
 import { ProfileFormValues } from "components/forms/types";
-import { updateProfile } from "components/forms/utils";
+import { requestPasswordLink, updateProfile } from "components/forms/utils";
 import dayjs from "dayjs";
 import { Formik } from "formik";
 import { PADDING_RL, REGULAR_FONT } from "lib/styles";
@@ -55,7 +55,7 @@ export const UpdateProfile = ({
             setLoading={setLoading}
           />
           <UpdateProfileForm formContext={formContext} />
-          {/* Buttons */}
+          {/* Profile Detail Buttons */}
           <View style={styles.buttonContainer}>
             <CraftedButton
               title={"Save"}
@@ -69,6 +69,25 @@ export const UpdateProfile = ({
               danger
             />
           </View>
+          {/* Danger Zone */}
+
+          <View style={styles.buttonContainer}>
+            <CraftedButton
+              title={"Request Password Reset"}
+              onPress={() => requestPasswordLink(session.user.email)}
+              loading={loading}
+              buttonStyles={[styles.dangerButton, styles.w300]}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <CraftedButton
+              title={"Delete Account"}
+              onPress={() => console.log("Delete Account")}
+              loading={loading}
+              danger
+              buttonStyles={[styles.dangerButton, styles.w300, styles.h200]}
+            />
+          </View>
         </View>
       )}
     </Formik>
@@ -79,17 +98,18 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
   },
+  w300: {
+    width: 400,
+  },
+  h200: {
+    height: 200,
+  },
   buttonContainer: {
     marginTop: "5%",
     flexDirection: "row",
     justifyContent: "center",
   },
-  buttonTitle: {
-    fontFamily: REGULAR_FONT,
-  },
-  button: {
-    width: 150,
-    height: 200,
+  dangerButton: {
     fontFamily: REGULAR_FONT,
     paddingRight: PADDING_RL,
     paddingLeft: PADDING_RL,

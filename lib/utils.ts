@@ -16,3 +16,7 @@ export function logout() {
   supabase.auth.signOut();
   router.replace("/");
 }
+
+export function goToSettings() {
+  router.replace("/settings");
+}

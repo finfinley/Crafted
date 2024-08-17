@@ -107,7 +107,7 @@ export default function Profile({ session }: { session: Session }) {
             {isUserLoggedIn(session, id) && (
               <View style={styles.editColumn}>
                 <Link
-                  href={{ pathname: "settings" }}
+                  href={{ pathname: "edit-profile" }}
                   style={{ alignSelf: "flex-end" }}
                 >
                   <MaterialIcons size={22} name="edit" color={SILK_CHOCOLATE} />

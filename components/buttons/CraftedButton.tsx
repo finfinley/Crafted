@@ -7,15 +7,22 @@ interface ButtonProps {
   title: string;
   onPress: () => void;
   loading: boolean;
-  danger?: boolean
+  danger?: boolean;
+  buttonStyles?: any;
 }
 
-const CraftedButton: React.FC<ButtonProps> = ({ title, danger, onPress, loading }) => {
+const CraftedButton: React.FC<ButtonProps> = ({
+  title,
+  danger,
+  onPress,
+  loading,
+  buttonStyles,
+}) => {
   const color = danger ? RED : DARK_BLUE;
-    return (
+  return (
     <Button
       titleStyle={styles.buttonTitle}
-      style={styles.button}
+      style={buttonStyles ?? styles.button}
       color={color}
       title={title}
       disabled={loading}
@@ -26,8 +33,7 @@ const CraftedButton: React.FC<ButtonProps> = ({ title, danger, onPress, loading 
 
 const styles = StyleSheet.create({
   button: {
-    width: 150,
-    height: 200,
+    width: 200,
     fontFamily: REGULAR_FONT,
     paddingRight: PADDING_RL,
     paddingLeft: PADDING_RL,

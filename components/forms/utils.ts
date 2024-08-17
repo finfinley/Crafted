@@ -1,3 +1,4 @@
+import { createURL } from "expo-linking";
 import { router } from "expo-router";
 import { supabase } from "lib/supabase";
 import { Alert } from "react-native";
@@ -58,5 +59,29 @@ export async function updateProfile({
     }
   } finally {
     setLoading(false);
+  }
+}
+
+export async function requestPasswordLink(email: string) {
+  try {
+    const resetPasswordURL = createURL("/edit-profile");
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: resetPasswordURL,
+    });
+
+    if (data) {
+      Alert.alert(
+        `Password reset link sent to ${email}. Please check your email.`
+      );
+    }
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.error("Error requesting password link", error);
+    if (error instanceof Error) {
+      Alert.alert(error.message);
+    }
   }
 }

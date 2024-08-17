@@ -102,7 +102,7 @@ export const UpdateProfileForm = ({
             Birthday:
           </Text>
         </View>
-        <View style={[styles.row]}>
+        <View style={[styles.row, { paddingBottom: 25}]}>
           <DateTimePicker
             value={values.birthday}
             accentColor={FLORAL_GRAY}
