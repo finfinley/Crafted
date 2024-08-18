@@ -1,21 +1,21 @@
-import {
-  BACKGROUND_COLOR,
-  HEADER_FONT,
-  OFF_WHITE,
-  SILK_CHOCOLATE,
-} from "lib/styles";
+import { BACKGROUND_COLOR, HEADER_FONT, OFF_WHITE } from "lib/styles";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Box({ title, children }) {
+type BoxProps = {
+  title?: string;
+  children: any;
+};
+
+export const Box: React.FC<BoxProps> = ({ title, children }) => {
   return (
     <View style={styles.profileDetailContainer}>
       <View style={styles.containerHeader}>
-        <Text style={styles.headerText}>{title}</Text>
+        {title && <Text style={styles.headerText}>{title}</Text>}
       </View>
       {children}
     </View>
   );
-}
+};
 
 const PADDING_RL = 8;
 
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: HEADER_FONT,
-    color: BACKGROUND_COLOR
+    color: BACKGROUND_COLOR,
   },
 
   profileDetailContainer: {
@@ -41,3 +41,5 @@ const styles = StyleSheet.create({
     paddingRight: PADDING_RL,
   },
 });
+
+export default Box;
