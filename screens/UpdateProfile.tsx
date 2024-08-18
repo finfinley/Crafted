@@ -11,14 +11,16 @@ import { logout } from "lib/utils";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export const UpdateProfile = ({
-  session,
-  userData,
-}: {
+type UpdateProfileProps = {
   session: any;
   userData: UserData;
+};
+
+export const UpdateProfile: React.FC<UpdateProfileProps> = ({
+  session,
+  userData,
 }) => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const {
     bio,

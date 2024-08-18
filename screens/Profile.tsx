@@ -3,6 +3,7 @@ import { Session } from "@supabase/supabase-js";
 import { Link } from "expo-router";
 import {
   BOLD_REG_FONT,
+  FLORAL_GRAY,
   HEADER_FONT,
   LIGHT_REG_FONT,
   OFF_WHITE,
@@ -12,8 +13,8 @@ import {
 import { isUserLoggedIn } from "lib/utils";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import { supabase } from "../lib/supabase";
 import ImageViewer from "../components/ImageViewer";
+import { supabase } from "../lib/supabase";
 
 export default function Profile({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
@@ -181,6 +182,7 @@ const styles = StyleSheet.create({
   profileLocation: {
     fontFamily: BOLD_REG_FONT,
     alignSelf: "center",
+    color: FLORAL_GRAY,
   },
   profileBio: {
     fontFamily: REGULAR_FONT,

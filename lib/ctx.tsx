@@ -10,7 +10,7 @@ type AuthContextType = {
   session: Session | null;
   loading: boolean;
   login: (email: string, password: string) => void;
-  signUp: (email: string, password: string) => void;
+  signup: (email: string, password: string) => void;
 };
 
 /**
@@ -33,7 +33,7 @@ export const AuthContext = createContext<AuthContextType>({
   session: null,
   loading: false,
   login: null,
-  signUp: null,
+  signup: null,
 });
 
 // Tells Supabase Auth to continuously refresh the session automatically if
@@ -78,7 +78,7 @@ export function AuthProvider({ children }) {
    * @param email User sign up email
    * @param password User entered password
    */
-  async function signUp(email: string, password: string) {
+  async function signup(email: string, password: string) {
     setLoading(true);
     const {
       data: { session },
@@ -109,7 +109,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, loading, login, signUp }}>
+    <AuthContext.Provider value={{ session, loading, login, signup }}>
       {children}
     </AuthContext.Provider>
   );

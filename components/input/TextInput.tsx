@@ -2,14 +2,23 @@ import { Input } from "@rneui/themed";
 import { FLORAL_GRAY, HEADER_FONT, OFF_WHITE } from "lib/styles";
 import { StyleSheet } from "react-native";
 
-export default function TextInput({
+type TextInputProps = {
+  label: string;
+  value: string;
+  icon: any;
+  placeholder: string;
+  onChange: (text: string) => void;
+  secure?: boolean;
+};
+
+export const TextInput: React.FC<TextInputProps> = ({
   label,
   value,
   placeholder,
   icon,
   onChange,
-  secure = false
-}) {
+  secure = false,
+}) => {
   return (
     <Input
       label={label}
@@ -25,7 +34,7 @@ export default function TextInput({
       secureTextEntry={secure}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   inputFont: {
@@ -34,3 +43,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+export default TextInput;

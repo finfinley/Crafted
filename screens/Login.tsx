@@ -11,26 +11,17 @@ import {
 } from "lib/styles";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import TextInput from "../components/input/TextInput";
+import TextInput from "components/input/TextInput";
+import Logo from "components/Logo";
 
 export default function Login() {
-  const { login, signUp, loading } = useSession();
+  const { login, loading } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center" }}>
-        <Text
-          style={{
-            fontSize: 56,
-            fontFamily: CURSIVE_FONT,
-            color: PALE_YELLOW,
-          }}
-        >
-          Crafted.
-        </Text>
-      </View>
+      <Logo />
       <View style={[styles.row, styles.mt20]}>
         <TextInput
           label="Email"
@@ -74,8 +65,8 @@ export default function Login() {
         title="Sign up"
         disabled={loading}
         onPress={() => {
-          signUp(email, password);
-          router.replace("/");
+          // signUp(email, password);
+          router.replace("/signup");
         }}
       />
     </View>

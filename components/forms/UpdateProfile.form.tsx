@@ -32,7 +32,7 @@ export const UpdateProfileForm = ({
             inputStyle={[styles.inputFont]}
             placeholderTextColor={FLORAL_GRAY}
             onChangeText={handleChange("handle")}
-            onBlur={handleBlur("displayName")}
+            onBlur={handleBlur("handle")}
             value={values.handle}
           />
         </View>
